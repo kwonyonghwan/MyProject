@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ktl.mapper.ReplyMapper">
+
+
+	<!--**** LIST **** -->
+	<select id="list" resultType="org.ktl.domain.ReplyVO">
+		SELECT 
+			*
+		FROM
+			tbl_reply
+		WHERE bno = #{bno}
+			order by rno desc
+	</select>
+	
+	
+	<!--**** CREATE **** -->
+	<insert id="create">
+		insert into tbl_reply(rno, bno, replytext, replyer)
+		values(seq_rno.nextval, #{bno}, #{replytext} ,#{replyer})   
+		<!--오라클 시퀀스 추가 !!!!!!> -->
+	</insert>
+
+
+	<!--**** UPDATE**** --> <!-- bno에 해당하는 제목이랑 내용 업데이트 -->
+	<update id="update">
+		update tbl_rely set replytext = #{replytext}, updatedate = now()
+		where rno = #{rno}
+	</update>
+
+
+	<!--**** DELETE **** -->
+	<delete id="delete">
+		delete from
+		tbl_board
+		where rno = #{rno}
+	</delete>
+
+
+
+	<!--**** LISTPAGE **** replyDAO-->
+	<select id="listPage" resultType="org.ktl.domain.BoardVO">
+		 <![CDATA[
+		 SELECT 
+		   rno, bno, replytext, replyer, regdate, updatedate
+		 FROM
+		   (
+		   select /*+INDEX_DESC(tbl_reply pk_reply))*/
+		     rownum rn, rno, bno, replytext, replyer, regdate, updatedate
+		   from tbl_reply
+		   where bno = #{bno}
+		   and rno > 0
+		   and rownum <= #{cri.page} * #{cri.perPageNum}
+		   )
+		WHERE rn > (#{cri.page} -1) * #{cri.perPageNum}
+		  ]]> 
+	 </select>
+	 
+	 
+	 <!--**** COUNT ****replyDAO -->
+	 <select id="count" resultType="int">
+	 	select count(bno) from tbl_reply where bno=#{bno}
+	 </select>
+
+</mapper>	
+			 

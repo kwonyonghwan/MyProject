@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ktl.mapper.LoginMapper">
+
+
+<!--**** LOGIN **** -->
+	<select id="login" resultType="org.ktl.domain.MemberVO">
+	
+	select *
+	from TBL_MEMBER
+	where MEMBERID = #{memberid} and MEMBERPW = #{memberpw}
+
+	</select>
+	
+	
+	<!--**** JOIN **** -->
+	<insert id="join">
+	insert into TBL_MEMBER (MEMBERID, MEMBERPW, MEMBERNAME, MEMBERADDRESS, MEMBERFOOTWIDTH, MEMBERFOOTHEIGHT, MEMBERFOOTIMAGE, MEMBERFOOTPERIMETER)
+	values(#{memberid}, #{memberpw}, #{membername}, #{memberaddress}, #{memberfootwidth}, #{memberfootheight}, #{memberfootimage}, #{memberfootperimeter})										
+	</insert>
+
+
+</mapper>

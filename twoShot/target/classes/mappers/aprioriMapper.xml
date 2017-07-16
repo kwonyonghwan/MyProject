@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ktl.mapper.AprioriMapper">
+
+
+	<!--**** 트랜잭션 데이터 가져오기 **** -->
+	<select id="getTransaction" resultType="org.ktl.domain.ShoppingHistoryVO">
+		SELECT  MEMBERID, SUBSTR (MAX (SYS_CONNECT_BY_PATH (pno, ',')), 2) dataset
+	      FROM (SELECT pno, MEMBERID,
+	                   ROW_NUMBER () OVER (PARTITION BY MEMBERID ORDER BY pno) rnum
+	              FROM TBL_SHOPPINGHISTORY)
+		START WITH rnum = 1
+		CONNECT BY PRIOR rnum = rnum - 1 AND PRIOR MEMBERID = MEMBERID
+		  GROUP BY MEMBERID
+	</select>
+	
+	<!-- 지지도 테이블에 값 삽입 -->
+	<insert id="insertSupport">
+		insert into 
+			tbl_support
+		values 
+			(#{freqdata},#{support})
+	</insert>
+	
+	<!-- 지지도 테이블의 모든 행 삭제  -->
+	<delete id="deleteAllSupport">
+		delete from 
+			tbl_support
+	</delete>
+	
+	<!-- 신뢰도 테이블에 값 삽입 -->
+	<insert id="insertConfidence">
+		insert into 
+			tbl_confidence
+		values 
+			(#{startdata},#{enddata}, #{confidence})
+	</insert>
+	
+	<!-- 신뢰도 테이블의 모든 행 삭제  -->
+	<delete id="deleteAllConfidence">
+		delete from 
+			tbl_confidence
+	</delete>
+	
+	
+	<!-- lift(향상도) 계산을 하여 tbl_confidence 테이블 갱신 -->
+
+   <select id="updateLift" statementType="CALLABLE">
+      
+      CALL apriori_lift()   
+   </select>
+   
+
+	<!-- 추천 테이블의 모든 행 삭제  -->
+	<delete id="deleteAllRecommend">
+		delete from 
+			tbl_recommend
+	</delete>
+	
+	<!-- 추천 테이블에 startdata에 해당하는(고객이 구매하거나 보고있는) 것에 대한 추천 제품을 삽입 -->
+   <insert id="insertRecommedList" statementType="CALLABLE">
+   	
+   		CALL recommend_proc(#{startdata})
+   </insert>
+   
+   	<select id="getRootdata" resultType="org.ktl.domain.RecommendVO">
+		select pno, productname, productthumimage
+		from tbl_product
+		where pno = #{pno}
+	</select>
+   
+   
+   <!--**** 추천 제품 리스트 가져오기 **** -->
+	<select id="getRecommedList" resultType="org.ktl.domain.RecommendVO">
+		select *
+		from tbl_recommend
+		
+	</select>
+   
+   
+   <!-- 개인 고객의 구매이력 리스트를 뽑아내서 tbl_personalshoppinghistory 테이블에 삽입.-->
+   <insert id="insertPersonalShoppingHistory" statementType="CALLABLE">
+   	
+   		CALL getshoppinghistory_proc(#{memberid})
+   </insert>
+   
+   <!-- tbl_personalshoppinghistory의 모든 행 삭제 -->
+    <delete id="deleteAllPersonalShoppingHistory">
+		delete from 
+			tbl_personalshoppinghistory
+	</delete>
+	
+   <!-- tbl_personalshoppinghistory 테이블에서 값 가져옴  -->
+    <select id="getPersonalShoppingHistory" resultType="org.ktl.domain.PersonalShoppingHistoryVO">
+		select *
+		from tbl_personalshoppinghistory
+	</select>
+   
+   
+   
+   
+   <!-- lift 수행 JAVA 코드로 수행하기 위해 작성한 Mapper들 시작-->
+    <!-- tbl_support 테이블에서 값 가져옴  -->
+    <select id="getSupportList" resultType="org.ktl.domain.SupportVO">
+		 select * from TBL_SUPPORT
+	</select>
+   
+   
+      <!-- tbl_confidence 테이블에서 값 가져옴  -->
+    <select id="getConfidenceList" resultType="org.ktl.domain.ConfidenceVO">
+		  select *  
+  		  from tbl_confidence
+	</select>
+   
+
+	   
+	<!-- tbl_Confidence의 모든 특정행 삭제 -->
+	<delete id="deleteConfidenceVO">
+		delete 
+		from 
+			tbl_confidence
+		where 
+    		 STARTDATA = #{startdata} and ENDDATA= #{enddata}
+	</delete>
+	<!-- lift 수행 JAVA 코드로 수행하기 위해 작성한 Mapper들 끝-->
+   
+   
+   
+   
+   
+   
+
+</mapper>
