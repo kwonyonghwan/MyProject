@@ -13,7 +13,7 @@ public class TileCode {
 
 		// Scanner sc = new Scanner(System.in);
 
-		int inputNumber = 1;
+		int inputNumber = 5;
 		int[] bottomUpMap = new int[31];
 		bottomUpMap[1] = 1;
 		bottomUpMap[2] = 3;

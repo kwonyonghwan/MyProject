@@ -30,7 +30,27 @@ public class test1 {
 
 	
 		
+		int sum = 0;
 		
+		
+		
+		for(int i=1; i<11; i++){
+			sum = sum+ (i*(i+1));
+		}
+		for(int i=1; i<10; i++){
+			sum = sum+ (i*(i+1));
+		}
+		for(int i=1; i<9; i++){
+			sum = sum+ (i*(i+1));
+		}
+		
+		for(int j=1; j<11; j++){
+		for(int i=1; i<=j; i++){
+			sum = sum+ (i*(i+1));
+		}
+		}
+		
+		System.out.println(sum);
 		
 		
 		

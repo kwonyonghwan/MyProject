@@ -10,7 +10,7 @@ public class IncreaseNumber {
 		Scanner sc = new Scanner(System.in);
 		
 		//int inputNumber = sc.nextInt()+1;
-		int inputNumber = 3;
+		int inputNumber = 5;
 		
 		int[][] bottomUpMap = new int[inputNumber][10];
 		
