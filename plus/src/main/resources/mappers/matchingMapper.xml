@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plus.mapper.matchingMapper">
+
+	<insert id="insertWordList" parameterType="MatchingDTO">
+		insert into
+		tbl_matchingdata
+		values
+		(#{memberid},#{matchingcategory},#{matchinglatitude},#{matchinglongitude},
+		#{matchingtime},#{matchingpeoplenumber},#{matchingagegroup},#{matchingoptional})
+	</insert>
+
+	<select id="readCategoryList" resultType="String">
+		select matchingcategory from tbl_matchingdata tbl_matchingdata group by
+		tbl_matchingdata.matchingcategory
+	</select>
+	
+	<select id="readMatchingData" resultType="MatchingDTO">
+		select * from tbl_matchingdata where matchingcategory = #{matchingcategory}
+	</select>
+
+
+	<delete id="1" parameterType="MatchingDTO">
+		delete from tbl_member where
+		memberid = #{memberid}
+	</delete>
+
+	<update id="2">
+		update tbl_member set
+		memberid=#{memberid},memberpw=#{memberpw},membername=#{membername},memberaddress=#{memberaddress},memberphonenumber=#{memberphonenumber},memberintroduction=#{memberintroduction},memberthumimage=#{memberthumimage},memberblocktime=#{memberblocktime}
+		where memberid = #{memberid}
+	</update>
+
+</mapper>

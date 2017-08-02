@@ -1,0 +1,240 @@
+/* ---- ★상품 목록 보기★ ---- */
+#product_group{
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 18px;	
+  display:inline-block;
+}
+
+#itemdetail{
+	
+}
+
+.product_thum{   	/* --상품목록 썸네일 -- */
+/* 	position:fixed; */
+/* 	z-index:1000; */
+	width: 290px; 
+	height : 290px;
+/* 	box-shadow: 1px 1px 1px 1px #ccc;  box-shadow를 이용해서 그림자를 만듭니다.  */
+}
+
+#list_topimg img{   /*-- 상품목록 topImg --*/
+	width:100%;
+}
+
+ul{  /*-- 목록리스트 --*/
+   list-style:none;
+}
+
+h1{
+	background-color: #202463;
+	color:#ffffff;
+}
+
+h3{
+	font-family: 'Dosis', sans-serif;
+	font-size: 40px;
+	
+}
+
+a{
+    color:#000000;
+    text-decoration:none;
+}
+/* a:hover{    글씨 마우스오버 */
+/*     color:#0080ff; */
+/*     text-decoration:underline; */
+/* } */
+/* --★상품 목록 보기 끝★-- */
+   
+   
+   
+/* --★상품 상세 보기★-- */   
+ #left_img {    /* 왼쪽 상품이미지 */
+ background-color: #09C;
+ float: left;
+ height: 300px;
+ width: 100px;
+ position: relative;
+}
+ 
+#product_right{  /* 오른쪽에 있는 상품 정보 전체. product테이블에 있는! */
+	margin-top: -24%;
+	margin-left: 50%;
+} 
+
+
+.product_info{  /* 오른쪽에 있는 상품 정보. product테이블에 있는! */
+	margin-left: 3%;
+	margin-top: 20%;
+	font-size: 14px;
+} 
+.product_info a{
+	font-size: 24px;
+} 
+
+h2{
+	font-size: 30px;
+}
+ 
+ 
+/* xBranding section - basic style */
+.cd-branding .cd-box {
+  margin-bottom: 0em;
+}
+.cd-branding img {
+  display: block;
+  width: 100%;
+}
+
+/* -------------------------------- 
+			Buttons 
+-------------------------------- */
+.btn {
+  border: none;
+  box-shadow: none;
+  border-radius: .15em;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  color: #ffffff;
+  padding: .6em 2.2em;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.btn.btn-outline {
+  color: #262626;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px #666666;
+}
+
+.no-touch .btn.btn-outline:hover {
+  color: #ffffff;
+  background: #183051;
+}
+
+.btn_br{   /* 발 사이즈부분 윗줄과 아랫줄 사이의 간격 */
+	margin-top: 1%;
+} 
+
+#contents{
+	margin-left:auto;
+	margin-right:auto;
+} 
+ 
+#buttons{
+	margin-top:-2%;
+	margin-right:5%;
+}  
+#size-button{
+	margin-right:-10%;
+}
+
+#color-button{
+	margin-right:-80%;
+}
+
+/* --------------------
+	      빨강버튼  css
+----------------------*/
+.btn-danger {
+	margin-top:4%;
+	margin-right:1%;
+	float:right;
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: transparent;
+}
+
+.btn-danger:hover {
+  color: #ffffff;
+  background-color: #c9302c;
+  border-color: rgba(0, 0, 0, 0);
+}
+
+.btn-danger .badge {
+  color: #d9534f;
+  background-color: #ffffff;
+}
+
+/* --------------------
+	(사이즈) 회색버튼  css
+----------------------*/
+.btn-default {		/* 기본 설정 */
+  color: #555555;
+  background-color: #e6e6e6;
+  border-color: rgba(0, 0, 0, 0.1);
+  font-size: :20px;
+}
+
+.btn-default:hover {    /* 마우스오버시 설정 */
+  color: #ffffff;
+  background-color: #444547;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.btn-default:active {     /* 클릭시 설정 */
+  color: #ffffff;
+  background-color: #444547;
+  border-color: rgba(0.7, 0.8, 0.5, 0.1);
+}
+
+/* --------------------
+	 (색상)회색버튼부분
+----------------------*/
+.btn-default2 {			/* 기본 설정 */
+  color: #555555;
+  background-color: #e6e6e6;
+  border-color: rgba(0, 0, 0, 0.1);
+  font-size: :20px;
+}
+
+.btn-default2:hover {    /* 마우스오버시 설정 */
+  color: #ffffff;
+  background-color: #444547;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.btn-default2:active {   /* 클릭시 설정 */
+  color: #ffffff;
+  background-color: #444547;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+#footshape{				/* 발 윤곽 투명도 설정*/
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; 
+filter: alpha(opacity=50);
+zoom: 1;
+opacity:0.5 
+}
+
+/* --------------------
+	 (제품추천)버튼부분
+----------------------*/
+.recBtn {
+  background: #13446b;
+  background-image: -webkit-linear-gradient(top, #13446b, #244a61);
+  background-image: -moz-linear-gradient(top, #13446b, #244a61);
+  background-image: -ms-linear-gradient(top, #13446b, #244a61);
+  background-image: -o-linear-gradient(top, #13446b, #244a61);
+  background-image: linear-gradient(to bottom, #13446b, #244a61);
+  -webkit-border-radius: 6;
+  -moz-border-radius: 6;
+  border-radius: 6px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 19px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-top : -20%;
+  margin-left : -5%;
+}
+
+.recBtn:hover {
+  background: #010405;
+  background-image: -webkit-linear-gradient(top, #010405, #030d14);
+  background-image: -moz-linear-gradient(top, #010405, #030d14);
+  background-image: -ms-linear-gradient(top, #010405, #030d14);
+  background-image: -o-linear-gradient(top, #010405, #030d14);
+  background-image: linear-gradient(to bottom, #010405, #030d14);
+  text-decoration: none;
+}

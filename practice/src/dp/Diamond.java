@@ -22,6 +22,7 @@ public class Diamond {
 			double[][] diamondList = new double[countOfDiamond][2];
 			int[] bottomUpMap = new int[countOfDiamond];
 			int maxValue=Integer.MIN_VALUE;
+			diamondList[0][0] = Integer.MIN_VALUE;
 			diamondList[0][1] = Integer.MAX_VALUE;
 			
 			for(int i=1; i<countOfDiamond; i++){

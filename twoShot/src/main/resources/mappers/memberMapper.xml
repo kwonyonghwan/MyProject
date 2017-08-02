@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ktl.mapper.MemberMapper">
+
+	<!--**** JOIN **** -->
+	<insert id="join">
+		insert into TBL_MEMBER(MEMBERID, MEMBERPW,
+		MEMBERNAME, MEMBERADDRESS,
+		MEMBERFOOTWIDTH, MEMBERFOOTHEIGHT,
+		MEMBERFOOTIMAGE,
+		MEMBERFOOTPERIMETER)
+		values(#{memberid}, #{memberpw},
+		#{membername}, #{memberaddress}, #{memberfootwidth},
+		#{memberfootheight}, #{memberfootimage, jdbcType=VARCHAR},
+		#{memberfootperimeter})
+	</insert>
+
+
+	<!--**** READ MEMBER **** -->
+	<select id="readMember" resultType="org.ktl.domain.MemberVO">
+		select
+		*
+		from
+		TBL_MEMBER
+		where
+		MEMBERID = #{memberid}
+	</select>
+
+	<!--**** READWITHPW **** -->
+	<select id="readWithPW" resultType="org.ktl.domain.MemberVO">
+
+		select
+		*
+		from
+		TBL_MEMBER
+		where
+		MEMBERID = #{memberid} and MEMBERPW = #{memberpw}
+
+	</select>
+
+
+	<!--**** LOGIN **** -->
+	<select id="login" resultType="org.ktl.domain.MemberVO">
+
+		select *
+		from TBL_MEMBER
+		where MEMBERID = #{memberid} and MEMBERPW =
+		#{memberpw}
+
+	</select>
+
+
+	<!--**** KEEP LOGIN **** -->
+	<update id="keepLogin">
+		update tbl_member set sessionKey = #{sessionId},
+		sessionLimit=#{next}
+		where memberid = #{memberid}
+	</update>
+
+	<select id="checkUserWithSessionkey" resultType="MemberVO">
+	select * 
+	from tbl_member
+	where 
+		sessionKey = #{value}
+		and sessionlimit > sysdate
+	</select>
+
+	<!--**** CARTLIST **** -->
+	<select id="cartList" resultType="org.ktl.domain.ShoppingCartVO">
+	<![CDATA[
+		select memberid, cno, pno, productthumimage, productname, productcolor, productsize, productprice, productcount
+		from TBL_SHOPPINGCART
+		where pno>0 and memberid = #{memberid} and productstatus='장바구니'
+	]]>
+	</select>
+
+	<!--**** PUTCART **** -->
+	<insert id="putCart">
+		insert into TBL_SHOPPINGCART(memberid, pno, cno, productname, productprice,
+		productthumimage, productcolor, productsize, productstatus)
+		values(#{memberid}, #{pno}, SEQ_SHOPPINGCART.nextval ,#{productname}, #{productprice}, 
+		#{productthumimage}, #{productcolor}, #{productsize}, '장바구니')
+		
+	</insert><!-- SEQ_PRODUCT.nextval -->
+
+
+	<!--**** DELETE CART **** -->
+	<delete id="deleteCart">
+		delete from
+		TBL_SHOPPINGCART
+		where pno in #{pno}
+	</delete>
+	<!-- where-in : WHERE 절에서 한 컬럼에 여러값을 선택하게 해준다. OR 연산자 대용으로 쓸 수 있다. -->
+	
+	
+	<!--**** putOrder **** 장바구니에 넣을 때 status를 '주문완료'설정 -->
+	<insert id="putOrder">
+		insert into TBL_SHOPPINGCART(memberid, pno, cno, productname, productprice, 
+		productthumimage, productcolor,productsize, productstatus)
+		values(#{memberid}, #{pno}, SEQ_SHOPPINGCART.nextval ,#{productname}, #{productprice},
+		#{productthumimage}, #{productcolor}, #{productsize}, '주문완료')
+	</insert>
+	
+	
+	<!--**** ORDERPAGE **** -->
+	<select id="orderPage" resultType="org.ktl.domain.ShoppingCartVO">
+	<![CDATA[
+		select *
+		from TBL_SHOPPINGCART
+		where pno = #{pno} and memberid = #{memberid}
+		]]>
+	</select>
+	
+	
+	<!--**** ORDERCOMPLETE **** -->
+	<select id="orderComplete" resultType="org.ktl.domain.ShoppingCartVO">
+	<![CDATA[
+
+		select *
+		from TBL_SHOPPINGCART
+		where pno = #{pno} and productstatus='주문완료'
+
+		]]>
+	</select>
+
+</mapper>

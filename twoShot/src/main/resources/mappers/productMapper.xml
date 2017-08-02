@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ktl.mapper.ProductMapper">
+
+	<!--**** READ **** -->
+	<select id="read" resultType="org.ktl.domain.ProductVO">
+		select
+		*
+		from
+		tbl_product
+		where
+		pno=#{pno}
+	</select>
+
+
+	<!--**** PRODUCTLIST **** -->
+	<select id="productList" resultType="org.ktl.domain.ProductVO">
+		<![CDATA[
+ 		select /*+INDEX_DESC(TBL_PRODUCT PK_PRODUCT) */ *
+ 		from
+ 			TBL_PRODUCT, TBL_MANUFACTURER
+		where TBL_PRODUCT.MANUFACTURERID = TBL_MANUFACTURER.MANUFACTURERID
+				AND pno > 0
+		]]>
+	</select>
+
+
+	<!--**** 상품재고 **** -->
+	<select id="productStock" resultType="org.ktl.domain.ProductStockVO">
+		<![CDATA[
+ 		select
+			PNO, PRODUCTSIZE, PRODUCTCOLOR, PRODUCTSTOCK
+ 		from
+ 			TBL_PRODUCTSTOCK
+ 		where PNO = #{pno}
+  		order by
+			PRODUCTSIZE asc
+		]]>
+	</select>
+
+
+	<!--**** LISTPAGE **** -->
+	<!-- 게시판테이블에서 rownum이 15개 이하인 데이터를 뽑아낸다음, 이 데이터들 중에서 rn이 0보다 큰것들을 뽑아내면 rownum이 
+		0~15 즉 첫번째 페이지에 해당하는 데이터들을 뽑아올 수 있다. -->
+	<select id="listPage" resultType="org.ktl.domain.ProductVO">
+		<![CDATA[	
+		select 
+			*
+    	from
+    	(
+    		select /*INDEX_DESC(tbl_product pno)*/ rownum rn, PNO, PRODUCTNAME, PRODUCTPRICE, PRODUCTMODEL
+    		PRODUCTCATEGORY, PRODUCTDETAIL, PRODUCTTHUMIMAGE, MANUFACTURERID
+    		from tbl_product
+    		where pno>0
+    		and rownum <=15
+    		order by pno
+    	)
+    	where rn>0
+		]]>
+	</select>
+	<!-- limit #{page}, 15 -->
+
+
+	<!--**** LISTCRITERIA **** -->
+	<select id="listCriteria" resultType="org.ktl.domain.ProductVO">
+		<![CDATA[
+		   	select *
+			FROM
+		    (
+
+		    select /*+INDEX_DESC(tbl_product pk_product)*/ rownum rn, PNO, PRODUCTNAME, PRODUCTPRICE,PRODUCTMODEL
+    		PRODUCTCATEGORY, PRODUCTDETAIL, PRODUCTTHUMIMAGE, MANUFACTURERID
+		    from tbl_product
+		    where rownum <= (#{page}*#{perPageNum})
+
+		    )
+
+		    where rn > #{pageStart} 
+
+	   	  ]]>
+	</select>
+	<!--in-line view. -->
+
+
+	<!--**** Count Paging **** -->
+<!-- 	<select id="countPaging" resultType="int"> -->
+<!--    		<![CDATA[ -->
+<!-- 	   		select count(pno) -->
+<!-- 	   		from tbl_product -->
+<!-- 	   		where pno > 0 -->
+<!-- 	   	]]> -->
+<!-- 	</select> -->
+
+
+<select id="countPaging" resultType="int"> -->
+<![CDATA[
+	 	select count(*)
+	 	from(
+		 	select /*+ INDEX_DESC (TBL_PRODUCT PK_PRODUCT) */ 
+		 		rownum rn, PNO, PRODUCTNAME, PRODUCTPRICE,PRODUCTMODEL
+				PRODUCTCATEGORY, PRODUCTTHUMIMAGE, MANUFACTURERID
+	    
+		    from
+		    (	          
+			      select *
+			      from tbl_product
+			      where pno in(
+			      
+				  select pno
+				  from tbl_productstock 
+			      WHERE 1=1
+		]]>
+
+		<!--색 필터링 -->
+		<if test="color != null">
+			AND PRODUCTCOLOR IN
+			<foreach collection="color" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+
+		</if>
+		<!--사이즈 필터링 -->
+		<if test="size != null">
+			AND PRODUCTSIZE IN
+			<foreach collection="size" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		    
+		<![CDATA[
+	      	  )
+	    )
+	    ]]>
+	    
+	   	where 1=1
+			<!-- 카테고리 필터링 -->
+			<if test="category != null">
+				and PRODUCTCATEGORY IN
+				<foreach collection="category" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+
+			<!--가격 -->
+			<include refid="multiSearch"></include>
+			
+			<![CDATA[		
+			)
+		]]>
+	</select>
+	
+
+
+	<!-- 동일한 쿼리를 다른 쿼리에서 일부분 사용한다거나 반복이 될 때(재사용) <sql id="a"> ,<include refid="a" 
+		/> -->
+	<!--**** 상품검색 **** -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'na'.toString()"> and productname like ('%'|| #{keyword} || '%')</if> <!-- 상품이름 -->
+			<if test="searchType == 'mo'.toString()"> and productmodel like ('%'|| #{keyword} || '%')</if>  <!-- 상품모델 -->
+			<if test="searchType == 'namo'.toString()"> 	<!-- 상품이름 or 상품모델 -->
+				and(productname like ('%' || #{keyword} || '%') OR productmodel like
+				('%'|| #{keyword} || '%'))
+			</if>
+		</if>
+	</sql>
+
+
+	<!--**** productSearch **** text검색 -->
+	<select id="productSearch" resultType="org.ktl.domain.ProductVO">
+		<![CDATA[
+			SELECT *
+			FROM
+			(
+				SELECT /*+INDEX_DESC(tbl_product, pk_product)*/
+					rownum rn, PNO, PRODUCTNAME, PRODUCTPRICE,PRODUCTMODEL
+					PRODUCTCATEGORY, PRODUCTTHUMIMAGE, MANUFACTURERID
+				FROM TBL_PRODUCT
+				WHERE 1=1
+		]]> 	
+	
+			<if test="keyword != null and keyword != ''">
+				and productname like ('%'|| #{keyword} || '%')
+			</if>	
+			
+		<![CDATA[	
+  		and rownum <= #{page} * #{perPageNum}
+ 		 )
+		where rn > (#{page} -1) * #{perPageNum}
+ 		]]>
+	</select>
+
+
+
+	<select id="productMultiSearch" parameterType="org.ktl.domain.SearchCriteria"
+		resultType="org.ktl.domain.ProductVO">
+	 	<![CDATA[
+	 	select *
+	 	from(
+	 	select /*+ INDEX_DESC (TBL_PRODUCT PK_PRODUCT) */ 
+	 		rownum rn, PNO, PRODUCTNAME, PRODUCTPRICE,PRODUCTMODEL
+			PRODUCTCATEGORY, PRODUCTTHUMIMAGE, MANUFACTURERID
+    
+	    from
+	    (	          
+		      select *
+		      from tbl_product
+		      where pno in(
+		      select pno
+		      from tbl_productstock
+		      WHERE 1=1
+		]]>
+
+		<!--색 필터링 -->
+		<if test="color != null">
+			AND PRODUCTCOLOR IN
+			<foreach collection="color" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+
+		</if>
+		<!--사이즈 필터링 -->
+		<if test="size != null">
+			AND PRODUCTSIZE IN
+			<foreach collection="size" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		    
+		<![CDATA[
+	      	  )
+	    )
+	    ]]>
+			WHERE 1=1
+		
+			<!-- 카테고리 필터링 -->
+			<if test="category != null">
+				and PRODUCTCATEGORY IN
+				<foreach collection="category" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+
+			<!--가격 -->
+			<include refid="multiSearch"></include>
+
+			<if test="manufacturerid != null">
+				and manufacturerid = #{manufacturerid} 
+			</if>
+			
+			<![CDATA[	
+			and rownum <= #{page} * #{perPageNum}
+			)
+			where rn >  (#{page} -1) * #{perPageNum}
+		]]>
+	</select>
+
+
+
+	<!-- 쿼리에 포함된 꺽쇠( ex) >, < etc...)가 안먹히기 때문에 CDATA를 쓰는건데 이걸로 감싸다 보면 if태그 
+		같은 것들이 비활성화 될 수 있음에 유념해야한다. -->
+	<sql id="multiSearch">
+		<if test="beginPrice != null and beginPrice != '' ">
+			AND productprice <![CDATA[ >= ]]>
+			#{beginPrice}
+		</if>
+		<if test="endPrice != null and endPrice != '' ">
+			AND productprice <![CDATA[ <= ]]>
+			#{endPrice}
+		</if>
+	</sql>
+
+
+	<!--**** LISTSEARCH COUNT **** -->
+	<select id="listSearchCount" resultType="int">
+	<![CDATA[
+		SELECT
+		  count(pno)
+		FROM
+		  tbl_product
+		WHERE 1=1
+		]]>
+		<include refid="search"></include>
+		<![CDATA[
+		and pno > 0
+		 ]]>
+	</select>
+	<!--**** READ IMAGE FOLDER **** -->
+	<select id="readimageforder" resultType="org.ktl.domain.ProductImageVO">
+		select
+		*
+		from
+		tbl_product_image
+		where
+		pno=#{pno}
+	</select>
+
+
+	<select id="specificStoreProductList" resultType="org.ktl.domain.ManufacturerVO">
+
+		select /*+ INDEX_DESC(tbl_product pk_product) */*
+		from tbl_product
+		where manufacturerid = #{manufacturerid}
+		
+	</select>
+	
+	
+	
+	<!--**** SPECIFICSTOREPRODUCTLISTCOUNT**** -->
+	<select id="specificStoreProductListCount" resultType="int">
+   		<![CDATA[
+
+	 	select count(*)
+	 	from(
+		 	select /*+ INDEX_DESC (TBL_PRODUCT PK_PRODUCT) */ 
+		 		rownum rn, PNO, PRODUCTNAME, PRODUCTPRICE,PRODUCTMODEL
+				PRODUCTCATEGORY, PRODUCTTHUMIMAGE, MANUFACTURERID
+	    
+		    from
+		    (	          
+			      select *
+			      from tbl_product
+			      where pno in(
+			      
+				  select pno
+				  from tbl_productstock 
+			      WHERE 1=1
+		]]>
+
+		<!--색 필터링 -->
+		<if test="color != null">
+			AND PRODUCTCOLOR IN
+			<foreach collection="color" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+
+		</if>
+		<!--사이즈 필터링 -->
+		<if test="size != null">
+			AND PRODUCTSIZE IN
+			<foreach collection="size" item="item" open="(" separator=","
+				close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		    
+		<![CDATA[
+	      	  )
+	    )
+	    ]]>
+	    
+	   	where 1=1
+			<!-- 카테고리 필터링 -->
+			<if test="category != null">
+				and PRODUCTCATEGORY IN
+				<foreach collection="category" item="item" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+
+			<!--가격 -->
+			<include refid="multiSearch"></include>
+
+			<if test="manufacturerid != null">
+				and manufacturerid = #{manufacturerid} 
+			</if>
+			
+			<![CDATA[		
+			)
+		]]>
+	</select>
+
+
+</mapper>

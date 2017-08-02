@@ -1,0 +1,28 @@
+html, button{ background: #ffffff; font-size: 1em; font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Calibri, Helvetica, Arial; }
+body{ margin: 20px; }
+a{ color: #2B81AF; text-decoration: underline; }
+a:hover{ text-decoration: none; }
+h1{ color: black; font-size: 3em; margin: 0; font-weight: normal; }
+.description{ font-size: .8em; }
+.credits{ font-size: .9em; color: black; }
+.credits.photo:before{ content: 'Photo '; }
+.credits.graphic:before{ content: 'Graphic '; }
+.credits.render:before{ content: 'Render'; }
+.ballast{ margin-top: 100px; color: #999; }
+
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600);
+body {font-family: "Source Code Pro", Consolas, monaco, monospace; line-height: 160%; font-size: 16px;  margin: 0; }
+path.link {
+    fill: none;
+    stroke-width: 2px;
+}
+.node:not(:hover) .nodetext {
+    display: none;
+}
+h1 { font-size: 36px; margin: 10px 0; text-transform: uppercase; font-weight: normal;}
+h2, h3 { font-size: 18px; margin: 5px 0 ; font-weight: normal;}
+header {padding: 20px; position: absolute; top: 0; left: 0;}
+a:link { color: #EE3124; text-decoration: none;}
+a:visited { color: #EE3124; }
+a:hover { color: #A4CD39; text-decoration: underline;}
+a:active { color: #EE3124; }

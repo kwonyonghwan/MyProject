@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- db연동 부분 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@121.166.177.103:7930:xe"></property>
+		<property name="username" value="teamKTL"></property>
+		<property name="password" value="team7920"></property>
+    </bean>
+    
+    
+    <bean id="transactionManager" 
+    	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean>
+    
+    
+    <tx:annotation-driven/>
+ 
+	<!-- 작성된 Mapper가 동작하도록 인식하는 부분. -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- 작성한 xml파일이 스프링이 동작할 때 어떤 폴더와 관계없이 자동으로 동작하도록 설정해준다. -->
+		<property name="mapperLocations" value="classpath:mappers/**/*.xml"></property>  <!-- mapperlocation이 없었음. -->
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+	</bean>
+
+	<!-- 트랜잭션 관리, db연결과 종료 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+
+	<!-- 스프링에 빈으로 등록하기. MemberDAOIMple에 s표시! -->
+	<context:component-scan base-package="org.ktl.persistence"></context:component-scan>
+
+
+</beans>

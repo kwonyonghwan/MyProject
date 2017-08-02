@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body {
+
+}
+
+h1 {
+
+}
+
+.callout {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+	display:none;
+	text-align:center;
+	margin:auto;
+	padding:10px;
+	position:absolute;
+	border:1px solid  #62B3F6;
+	color:#000000;
+	background-color: rgba( 255, 255, 255, 0.8 );
+}
+
+.callout .contents {
+	font-family: 'Jeju Gothic', sans-serif;
+	color:#3A3838;
+	text-align:left;
+	margin-top:4px;
+	padding:4px;
+	height:80px;
+	font-size: 18px;
+}
+
+.callout .header {
+	font-family: 'Hanna', sans-serif;
+	text-align:center;
+	text-decoration:underline;
+	top: 10px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	font-size: 28px;
+}
+
+.callout .closebox {
+	float:right;
+	width: 16px;
+	height: 16px;
+	top: 4px;
+}
+.callout .img .img{
+	height:100%;
+	width: auto;
+}
+
+.callout #selectButton {
+	align:center;
+}

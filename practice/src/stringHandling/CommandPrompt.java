@@ -7,35 +7,14 @@ import java.util.Scanner;
 public class CommandPrompt {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Scanner sc = new Scanner(new FileInputStream("src/stringHandling/CommandPrompt.txt"));
-
-		// Scanner sc = new Scanner(System.in);
 		
-		int countOfFile = sc.nextInt();
-		sc.nextLine();
+		Scanner sc = new Scanner(System.in);
 		
-		char[] resultArray = sc.nextLine().toCharArray();
+		String inputWord = sc.nextLine();
 		
-		for(int i=1; i<countOfFile; i++){
-		 
-			char[] tempArray = sc.nextLine().toCharArray();
-			
-			for(int j=0; j<tempArray.length; j++){
-				if(resultArray[j] != tempArray[j]){
-					resultArray[j] = '?';
-				}else{
-					resultArray[j] = resultArray[j];
-				}
-					
-			}//forJ
-			
+		for(int i=0; i<inputWord.length(); i++){
+			System.out.print((char)((((int)inputWord.charAt(i)-65)+23)%26+65));
 		}
-		
-		for(int i=0; i<resultArray.length; i++){
-			System.out.print(resultArray[i]);
-		}
-		
-		
 		
 	}// main
 }// class
