@@ -24,62 +24,56 @@ public class Tomato {
 		int numberOfI = sc.nextInt();
 		int resultDay = -1;
 		int[][] graph = new int[numberOfI][numberOfJ];
-
-		for (int i = 0; i < numberOfI; i++) {
-			for (int j = 0; j < numberOfJ; j++) {
-				graph[i][j] = sc.nextInt();
-			}
-		} // forSetting
-
 		Queue<Position> queue = new LinkedList<Position>();
 
 		for (int i = 0; i < numberOfI; i++) {
 			for (int j = 0; j < numberOfJ; j++) {
+				graph[i][j] = sc.nextInt();
 				if (graph[i][j] == 1) {
 					queue.offer(new Position(i, j));
 				}
 			}
-		} // searchFistStep
+		} // forSetting
 
 		while (!queue.isEmpty()) {
 
 			int queueSize = queue.size();
-			System.out.println();
-			System.out.println(resultDay);
-			for(int i=0; i<graph.length; i++){
-				for(int j=0; j<graph[0].length; j++){
-					System.out.print(graph[i][j]+" ");
-				}
-				System.out.println();
-			}
-			
-			
+
 			resultDay++;
 			for (int i = 0; i < queueSize; i++) {
 
 				Position nowPosition = queue.poll();
+				
+				System.out.println("----------------------------------------------s");
+				for(int k =0; k<graph.length; k++){
+					for (int j = 0; j < graph[0].length; j++) {
+						System.out.print(graph[k][j]+" ");
+					}	
+					System.out.println();
+				}
+				
+				
+				
 				for (int j = 0; j < 4; j++) {
 					if (nowPosition.positionI + directionList[j][0] > -1
 							&& nowPosition.positionI + directionList[j][0] < graph.length
 							&& nowPosition.positionJ + directionList[j][1] > -1
 							&& nowPosition.positionJ + directionList[j][1] < graph[0].length
-							&& graph[nowPosition.positionI + directionList[j][0]][nowPosition.positionJ
-									+ directionList[j][1]] == 0) {
-						Position nextPosition = new Position(nowPosition.positionI + directionList[j][0],
-								nowPosition.positionJ + directionList[j][1]);
+							&& graph[nowPosition.positionI + directionList[j][0]][nowPosition.positionJ + directionList[j][1]] == 0) {
+						Position nextPosition = new Position(nowPosition.positionI + directionList[j][0], nowPosition.positionJ + directionList[j][1]);
 						graph[nextPosition.positionI][nextPosition.positionJ] = 1;
 						queue.offer(nextPosition);
 					}
 
-				}//fordirection
+				} // fordirection
 
-			}//forOneDay
+			} // forOneDay
 
-		}//whileBFS
-		
+		} // whileBFS
+
 		for (int i = 0; i < numberOfI; i++) {
 			for (int j = 0; j < numberOfJ; j++) {
-				if (graph[i][j] < 0) {
+				if (graph[i][j] == 0) {
 					resultDay = -1;
 				}
 			}

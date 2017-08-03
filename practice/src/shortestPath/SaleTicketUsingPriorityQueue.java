@@ -2,10 +2,8 @@ package shortestPath;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 class CountryVertex implements Comparable<CountryVertex> {
 	int vertexNumber;

@@ -12,8 +12,8 @@ public class hideAndSeek {
 
 		Scanner sc = new Scanner(System.in);
 
-		int startLocation = 0;
-		int endLocation = 100000;
+		int startLocation = 5;
+		int endLocation = 17;
 
 		int[] graph = new int[maxValue];
 		for(int i=0; i<maxValue; i++){

@@ -18,7 +18,7 @@ import com.plus.service.BlacklistService;
 
 
 @RestController
-@RequestMapping("/blacklist/*")
+@RequestMapping("/blacklists/*")
 public class BlacklistController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
