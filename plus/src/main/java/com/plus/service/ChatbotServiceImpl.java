@@ -18,6 +18,8 @@ public class ChatbotServiceImpl implements ChatbotService{
 	private ChatbotDAO dao;
 	@Inject
 	private CallAiAPi chatbot;
+	@Inject
+	private DaumLocaleSearchAPI localeSearch;
 	
 	@Override
 	public void insertMesage(ChatbotDTO ChatbotDTO) throws Exception {
@@ -25,20 +27,25 @@ public class ChatbotServiceImpl implements ChatbotService{
 		System.out.println("------------insertMesage------------------");
 	
 		//api에 데이터 던지기 
-		MatchingTempDTO tempDto = new MatchingTempDTO();
-		tempDto.setMemberid(ChatbotDTO.getMemberid());
-		tempDto = chatbot.runChatbot(ChatbotDTO.getSentence());
-		
-	//	https://apis.daum.net/local/geo/addr2coord?apikey={apikey}&q=제주 특별자치도 제주시 첨단로 242&output=json
-		
 		//api에서 데이터 받기 
-	//	MatchingDTO dto = new MatchingDTO();
+		MatchingTempDTO tempDto = chatbot.runChatbot(ChatbotDTO.getSentence());
+		tempDto.setMemberid(ChatbotDTO.getMemberid());
 		
 		//받은 데이터에서 위경도 추출 
+		MatchingDTO matchingDTO = new MatchingDTO();
+		if(tempDto.getMatchinglocation()==null){
+			matchingDTO = localeSearch.addressToCoord(matchingDTO, ChatbotDTO.getAddress());
+		}else{
+			matchingDTO = localeSearch.addressToCoord(matchingDTO, tempDto.getMatchinglocation());
+		}
+		matchingDTO.setMemberid(ChatbotDTO.getMemberid());
+		matchingDTO.setMatchingagegroup(tempDto.getMatchingagegroup());
+		matchingDTO.setMatchingcategory(tempDto.getMatchingcategory());
+		matchingDTO.setMatchingoptional(tempDto.getMatchingoptional());
+		matchingDTO.setMatchingpeoplenumber(tempDto.getMatchingpeoplenumber());
+		matchingDTO.setMatchingtime(tempDto.getDate());
 		
-		//dao.insertWordList(dto);
+		dao.insertWordList(matchingDTO);
 	}//insertMesage()
-
-
 
 }//class

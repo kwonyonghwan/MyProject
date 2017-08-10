@@ -22,6 +22,9 @@ public class CallAiAPi {
 		MatchingTempDTO resultDto = new MatchingTempDTO();
 		String s;
 		try {
+			
+			
+			System.out.println("-------------------runChatbot------------------------");
 
 			ProcessBuilder pb = new ProcessBuilder("C:\\zzz\\client8.exe", sentence);
 			Process oProcess = pb.start();
@@ -35,9 +38,10 @@ public class CallAiAPi {
 			// "표준 출력"과 "표준 에러 출력"을 출력
 			while ((s = stdOut.readLine()) != null)
 				message += s;
-			while ((s = stdError.readLine()) != null)
+			while ((s = stdError.readLine()) !=  null)
 				System.err.println(s);
 
+			System.out.println(message);
 			// String => JSON
 			String[] temp = message.split(" ");
 
