@@ -25,8 +25,8 @@ public class SidebarController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
 
-	@Inject 
-	SidebarService service;
+	/*@Inject 
+	SidebarService service;*/
 	
 	@RequestMapping("readSidebar")
 	public void readSidebar(@RequestBody MemberDTO memberDTO) {

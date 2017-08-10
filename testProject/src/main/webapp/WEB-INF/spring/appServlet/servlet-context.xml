@@ -22,7 +22,13 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="org.yonghwan.web" />
-	
-	
+
+	<beans:bean id="loginInterceptor" class="org.yong.interceptor.LoginInterceptor"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/users/loginPost" />
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

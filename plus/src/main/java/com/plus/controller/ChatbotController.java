@@ -28,7 +28,7 @@ public class ChatbotController {
 	public void sentencePost(@RequestBody ChatbotDTO dto) throws Exception{
 		
 		System.out.println(dto.toString());
-		//service.insertMesage(dto);
+		service.insertMesage(dto);
 		//return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
 	}//sentencePost()
 

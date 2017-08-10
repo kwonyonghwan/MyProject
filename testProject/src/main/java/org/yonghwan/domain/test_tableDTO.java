@@ -3,6 +3,7 @@ package org.yonghwan.domain;
 public class test_tableDTO {
 	private String name;
 	private int age;
+	
 	public String getName() {
 		return name;
 	}

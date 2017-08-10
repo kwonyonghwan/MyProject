@@ -5,6 +5,6 @@ import com.plus.domain.MeetingDTO;
 
 public interface ChatbotService {
 
-	public void insertMesage(ChatbotDTO ChatbotDTO);
+	public void insertMesage(ChatbotDTO ChatbotDTO) throws Exception;
 	
 }//interface

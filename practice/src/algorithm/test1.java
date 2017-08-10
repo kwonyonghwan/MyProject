@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
@@ -28,9 +29,14 @@ public class test1 {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
+	List<Integer> test = new ArrayList<Integer>();
+
+	test.add(1);
+	test.add(2);
+	System.out.println(test.indexOf(2));
 	
-		
-		int sum = 0;
+	
+	int sum = 0;
 		
 		
 		

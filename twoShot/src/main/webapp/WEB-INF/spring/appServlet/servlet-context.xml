@@ -31,7 +31,6 @@
 	<beans:bean id="authInterceptor" class="org.ktl.interceptor.AuthInterceptor"></beans:bean>
 	<beans:bean id="loginInterceptor" class="org.ktl.interceptor.LoginInterceptor"></beans:bean>
 
-
 	<!-- '/member/loginPost' 경로를 호출할 때 동작하도록 설정함. -->
 	<interceptors>
 		<interceptor>
