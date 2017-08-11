@@ -20,18 +20,18 @@ import com.plus.domain.MatchingDTO;
 public class DaumLocaleSearchAPI {
 	
 	public static MatchingDTO addressToCoord(MatchingDTO matchingDTO, String address){
-		
+		System.out.println(address);
 		
 		String apiKey = "0fa7d35d2108fc7254a10689d92330c2";
 
 		String requestURI = "http://apis.daum.net/local/geo/addr2coord?apikey=" + apiKey
 				+ "&output=json&page_size=1&q=";
-		address = "야탑";
+		//address = "야탑";
 		
 		try {
 
 			address = URLEncoder.encode(address, "UTF-8");
-
+ 
 		} catch (UnsupportedEncodingException e) {
 
 			e.printStackTrace();
@@ -59,17 +59,13 @@ public class DaumLocaleSearchAPI {
 
 				i++;
 			}
-
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
 		closeJSONReader(bufferedReader);
 		
 		return matchingDTO;
 	}//AddressToCoord
-	
-	
 
 	public static BufferedReader openJSONReader(String requestURI) {
 
@@ -104,7 +100,7 @@ public class DaumLocaleSearchAPI {
 		}
 
 		return bufferedReader;
-	}
+	}//openJSONReader
 
 	public static boolean closeJSONReader(BufferedReader bufferedReader) {
 
@@ -121,6 +117,6 @@ public class DaumLocaleSearchAPI {
 		}
 
 		return closeJSONReaderResult;
-	}
+	}//closeJSONReader
 
-}
+}//class

@@ -31,7 +31,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		MemberVO MemberVO = (MemberVO)modelMap.get("memberVO");
 		
 		if(MemberVO != null){
-			
 		
 			logger.info(""+session.getAttribute(LOGIN));
 			if(request.getParameter("useCookie") != null) {

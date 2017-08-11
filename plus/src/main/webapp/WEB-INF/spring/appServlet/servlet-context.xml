@@ -24,4 +24,21 @@
 	<context:component-scan base-package="com.plus.controller" />
 	<context:component-scan base-package="com.plus.service" />
 	<context:component-scan base-package="com.plus.util" />
+	
+	
+	<beans:bean id="loginInterceptor" class="com.plus.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="com.plus.interceptor.AuthInterceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/members/loginPost" />
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/meetings/*" />
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>

@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,11 +30,11 @@ public class DaumLocaleSearchAPITest {
 	public static void main(String[] args) {
 
 		/* http://dna.daum.net/myapi/dataapi/new 에서 발급받은 키를 입력 */
-		String apiKey = "0fa7d35d2108fc7254a10689d92330c2";
+		String apiKey = "AIzaSyByqEfW-Me8-33lgE_zeMYMP1hgwhtURJY";
 
-		String requestURI = "http://apis.daum.net/local/geo/addr2coord?apikey=" + apiKey
-				+ "&output=json&page_size=1&q=";
-		// printAddressToCoord(requestURI, "역삼");
+		String requestURI = "https://maps.googleapis.com/maps/api/geocode/json?key="+apiKey+ "&address=";
+		
+		 //printAddressToCoord(requestURI, "역삼");
 		parseAddressToCoord(requestURI, "야탑");
 
 	}
@@ -92,37 +93,14 @@ public class DaumLocaleSearchAPITest {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(bufferedReader);
 
-			JSONObject channelObject = (JSONObject) jsonObject.get("channel");
+			JSONArray itemObjectList = (JSONArray) jsonObject.get("results");
+			JSONObject resulttempObject1 = (JSONObject)(itemObjectList).get(0);
+			JSONObject resultempObject2 = (JSONObject)resulttempObject1.get("geometry");
+			JSONObject resulObject = (JSONObject)resultempObject2.get("location");
 
-			System.out.println("================= " + "전체 검색결과" + " ================== ");
-
-			System.out.println("\tresult : " + channelObject.get("result"));
-			System.out.println("\tpageCount : " + channelObject.get("pageCount"));
-			System.out.println("\ttitle : " + channelObject.get("title"));
-			System.out.println("\ttotalCount : " + channelObject.get("totalCount"));
-			System.out.println("\tdescription : " + channelObject.get("description"));
-
-			JSONArray itemObjectList = (JSONArray) channelObject.get("item");
-
-			int i = 1;
-			for (Object tempObject : itemObjectList) {
-
-				System.out.println("");
-				System.out.println("================= " + i + "번째 검색결과" + " ================= ");
-
-				tempObject = (JSONObject) tempObject;
-
-				System.out.println("\ttitle : " + ((JSONObject) tempObject).get("title"));
-				
-				double temp1 = (double) ((JSONObject) tempObject).get("point_x");
-				double temp2 = (double) ((JSONObject) tempObject).get("point_y");
-
-				System.out.println("\tpoint_x : " + temp1);
-				System.out.println("\tpoint_y : " + temp2);
-
-				i++;
-			}
-
+			double temp1 = (double)resulObject.get("lng");
+			double temp2 = (double)resulObject.get("lat");
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
