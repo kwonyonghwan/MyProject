@@ -19,13 +19,11 @@ public class ChatbotServiceImpl implements ChatbotService{
 	@Inject
 	private CallAiAPi chatbot;
 	@Inject
-	private DaumLocaleSearchAPI localeSearch;
+	private GoogleGeocodingAPI localeSearch;
 	
 	@Override
 	public void insertMesage(ChatbotDTO ChatbotDTO) throws Exception {
 		
-		System.out.println("------------insertMesage------------------");
-	
 		//api에 데이터 던지기 
 		//api에서 데이터 받기 
 		MatchingTempDTO tempDto = chatbot.runChatbot(ChatbotDTO.getSentence());
@@ -33,7 +31,7 @@ public class ChatbotServiceImpl implements ChatbotService{
 		
 		//받은 데이터에서 위경도 추출 
 		MatchingDTO matchingDTO = new MatchingDTO();
-		if(tempDto.getMatchinglocation()==null){
+		if(tempDto.getMatchinglocation().equals("NULL_location")){
 			matchingDTO = localeSearch.addressToCoord(matchingDTO, ChatbotDTO.getAddress());
 		}else{
 			matchingDTO = localeSearch.addressToCoord(matchingDTO, tempDto.getMatchinglocation());

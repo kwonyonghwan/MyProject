@@ -18,13 +18,10 @@ import net.minidev.json.parser.JSONParser;
 public class CallAiAPi {
 
 	public MatchingTempDTO runChatbot(String sentence) throws Exception {
-
+		
 		MatchingTempDTO resultDto = new MatchingTempDTO();
-		String s;
 		try {
-			
-			
-			System.out.println("-------------------runChatbot------------------------");
+			String s;
 
 			ProcessBuilder pb = new ProcessBuilder("C:\\zzz\\client8.exe", sentence);
 			Process oProcess = pb.start();
@@ -41,7 +38,6 @@ public class CallAiAPi {
 			while ((s = stdError.readLine()) !=  null)
 				System.err.println(s);
 
-			System.out.println(message);
 			// String => JSON
 			String[] temp = message.split(" ");
 
@@ -53,15 +49,10 @@ public class CallAiAPi {
 			Date to2 = transFormat2.parse(temp[3]);
 			resultDto.setDate(to1);
 			resultDto.setTime(to2);
-
-			resultDto.setMatchingpeoplenumber(Integer.parseInt(temp[4]));
+			
+			resultDto.setMatchingpeoplenumber(extractPeopleNumber(temp[4]));
 			resultDto.setMatchingagegroup(temp[5]);
 			resultDto.setMatchingoptional(temp[6]);
-
-			// 외부 프로그램 반환값 출력 (이 부분은 필수가 아님)
-			System.out.println("Exit Code: " + oProcess.exitValue());
-			System.exit(oProcess.exitValue()); // 외부 프로그램의 반환값을, 이 자바 프로그램 자체의
-												// 반환값으로 삼기
 
 		} catch (IOException e) { // 에러 처리
 			System.err.println("에러! 외부 명령 실행에 실패했습니다.\n" + e.getMessage());
@@ -69,5 +60,19 @@ public class CallAiAPi {
 		}
 		return resultDto;
 	}// runChatbot()
+	
+	public static int extractPeopleNumber(String temp){
 
+		String result = "";
+		char[] changeArray = temp.toCharArray();
+		
+		for (char c : changeArray) {
+			if((int)c >47&& (int)c<58 ){
+				result+=c;
+			}
+		}
+		
+		return Integer.parseInt(result);
+	}//extractPeopleNumber
+	
 }// class
