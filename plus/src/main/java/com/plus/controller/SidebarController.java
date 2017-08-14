@@ -18,6 +18,8 @@ import com.plus.domain.MemberDTO;
 import com.plus.service.BlacklistService;
 import com.plus.service.SidebarService;
 
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 
 @RestController
 @RequestMapping("/sidebars/*")
@@ -25,13 +27,13 @@ public class SidebarController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
 
-	/*@Inject 
-	SidebarService service;*/
+	@Inject 
+	SidebarService service;
 	
-	@RequestMapping("readSidebar")
-	public void readSidebar(@RequestBody MemberDTO memberDTO) {
+	@RequestMapping(value = "readSidebar", method = RequestMethod.POST)
+	public JSONArray readSidebar(@RequestBody MemberDTO memberDto) {
 
-		System.out.println(memberDTO.toString());
+		return service.readSidebarData(memberDto.getMemberid());
 	}//readBlacklist()
 	
 }//class

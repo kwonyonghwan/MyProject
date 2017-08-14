@@ -24,7 +24,6 @@ public class GoogleGeocodingAPI {
 		String apiKey = "AIzaSyByqEfW-Me8-33lgE_zeMYMP1hgwhtURJY";
 
 		String requestURI = "https://maps.googleapis.com/maps/api/geocode/json?key=" + apiKey + "&address=";
-		// address = "¾ßÅ¾";
 
 		try {
 

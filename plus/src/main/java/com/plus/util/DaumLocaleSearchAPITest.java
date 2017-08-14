@@ -25,18 +25,27 @@ import org.json.simple.parser.JSONParser;
  * @author hanjoong.cho
  * @Date 2014. 1. 29
  */
+
+//Apriori 알고리즘 전체
+	// 스케줄은 메서드에 @Scheduled 어노테이션을 부여해서 설정한다.
+	// cron = "초 분 시 월 년 요일"
+	// fixed-rate="5000" 5초마다 태스크 호출
+	// fixed-delay="5000" 태스크 실행 후에 지정한 5초 동안 대기하고, 다시 태스크를 호출한다.
+	//@Scheduled(fixedDelay = 3)
+	//@Scheduled(cron = "1 * * * * ?")
 public class DaumLocaleSearchAPITest {
 
 	public static void main(String[] args) {
 
-		/* http://dna.daum.net/myapi/dataapi/new 에서 발급받은 키를 입력 */
+		System.out.println("배치 테스트");
+	/*	 http://dna.daum.net/myapi/dataapi/new 에서 발급받은 키를 입력 
 		String apiKey = "AIzaSyByqEfW-Me8-33lgE_zeMYMP1hgwhtURJY";
 
 		String requestURI = "https://maps.googleapis.com/maps/api/geocode/json?key="+apiKey+ "&address=";
 		
 		 //printAddressToCoord(requestURI, "역삼");
 		parseAddressToCoord(requestURI, "야탑");
-
+*/
 	}
 
 	public static void printAddressToCoord(String requestURI, String address) {

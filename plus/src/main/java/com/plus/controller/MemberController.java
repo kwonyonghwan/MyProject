@@ -25,29 +25,28 @@ public class MemberController {
 
 	/* ------ login, POST -------- 로그인 결과처리하는곳 */
 	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
-	public void loginPOST(@RequestBody MemberDTO dto, HttpSession session, Model model) throws Exception {
-		
-		logger.info("----------------------------------------------------------");
-		logger.info("dto :" + dto);
-		logger.info("session :" + session.getId());
-		logger.info("model :" + model);
+	public int loginPOST(@RequestBody MemberDTO dto, HttpSession session, Model model) throws Exception {
 
-		System.out.println("session :" + session.getId());
-		System.out.println("model :" + model);
-		
-		MemberDTO resultDto = service.selectMember(dto.getMemberid());
+		MemberDTO resultDto = service.selectMember(dto);
 
-		System.out.println(resultDto.toString());
 		if (resultDto == null) { // 로그인 안된 상태라면
-			return; // 이경로로 이동!
+			return -1;		
 		}
 
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("login");
-		session.setAttribute("login", memberDTO);
-		model.addAttribute("MemberDTO", memberDTO);
+		session.setAttribute("login", resultDto);
 
-		//return; // 로그인이 되면(즉,id == pw)이면 이동할 경로.
+		return 1; // 로그인이 되면(즉,id == pw)이면 이동할 경로.
 
+	}// loginPOST
+	
+	
+	@RequestMapping(value = "registerPost", method = RequestMethod.POST)
+	public int registerPost(@RequestBody MemberDTO dto, HttpSession session, Model model) throws Exception {
+
+		service.insertMember(dto);
+
+		return 1; 
+		
 	}// loginPOST
 
 }// class

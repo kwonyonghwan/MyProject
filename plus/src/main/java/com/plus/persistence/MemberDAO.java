@@ -10,6 +10,6 @@ public interface MemberDAO {
 	
 	public void updateMember(MemberDTO memberDTO);
 	
-	public MemberDTO selectMember(String memberid);
+	public MemberDTO selectMember(MemberDTO memberDTO);
 	
 }//interface

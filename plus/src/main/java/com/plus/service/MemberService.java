@@ -10,6 +10,6 @@ public interface MemberService {
 	
 	public void updateMember(MemberDTO memberDTO);
 	
-	public MemberDTO selectMember(String memberid);
+	public MemberDTO selectMember(MemberDTO dto);
 
 }//interface

@@ -12,7 +12,7 @@
 
 	<delete id="deleteMember" parameterType="MemberDTO">
 		delete from tbl_member where
-		memberid = #{memberid}
+		memberid = #{memberid} 
 	</delete>
 
 	<update id="updateMember">
@@ -23,7 +23,7 @@
 
 	<select id="selectMember" resultType="MemberDTO">
 		select * from tbl_member where
-		memberid=#{memberid}
+		memberid = #{memberid} and memberpw = #{memberpw}
 	</select>
 
 </mapper>

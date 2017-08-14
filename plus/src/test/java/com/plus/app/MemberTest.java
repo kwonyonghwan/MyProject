@@ -32,10 +32,6 @@ public class MemberTest {
 	public void testSelectMember() throws Exception {
 		String memberid = "testUser2";
 	
-	
-		System.out.println(service.selectMember(memberid));
-		
-		
 	}//testInsertTest_table
 	
 

@@ -1,9 +1,9 @@
 package com.plus.service;
 
-import com.plus.domain.MemberDTO;
+import net.minidev.json.JSONArray;
 
 public interface SidebarService {
 	
-	public void readSidebarData(String memberid);
+	public JSONArray readSidebarData(String memberid);
 	
 }//interface

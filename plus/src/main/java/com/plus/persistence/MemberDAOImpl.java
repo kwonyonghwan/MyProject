@@ -34,8 +34,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}//updateMember
 
 	@Override
-	public MemberDTO selectMember(String memberid) {
-	   return sqlSession.selectOne(namespace+".selectMember", memberid);
+	public MemberDTO selectMember(MemberDTO memberDTO) {
+	   return sqlSession.selectOne(namespace+".selectMember", memberDTO);
 	}//selectMember
 	
 }//class

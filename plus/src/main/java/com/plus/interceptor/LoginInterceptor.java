@@ -20,7 +20,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("post Handle.....");
 
 		HttpSession session = request.getSession();
-		System.out.println(session.toString());
+		System.out.println(session.getId());
+		System.out.println(session.getAttribute(LOGIN));
 		
 	/*	ModelMap modelMap = modelAndView.getModelMap();
 		Object MemberDTO = modelMap.get("MemberDTO");
