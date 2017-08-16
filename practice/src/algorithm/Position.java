@@ -11,9 +11,9 @@ public class Position {
 
 }
 /*
- * class Position { int positionI; int positinoJ;
+ * class Position { int positionI; int positionJ;
  * 
- * public Position(int i, int j) { this.positionI = i; this.positinoJ = j; }
+ * public Position(int i, int j) { this.positionI = i; this.positionJ = j; }
  * 
  * }
  */
