@@ -8,7 +8,6 @@ public class StringRepitition {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner sc = new Scanner(new FileInputStream("src/stringHandling/StringRepitition.txt"));
-
 		  
        // Scanner sc = new Scanner(System.in);
         

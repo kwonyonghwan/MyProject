@@ -36,6 +36,14 @@ public class SidebarController {
 		return service.readSidebarData(memberDto.getMemberid());
 	}//readBlacklist()
 	
+	@RequestMapping(value = "readSidebar", method = RequestMethod.GET)
+	public JSONArray readSidebar1(@RequestBody MemberDTO memberDto) {
+
+		return service.readSidebarData(memberDto.getMemberid());
+	}//readBlacklist()
+	
+	
+	
 }//class
 
 
