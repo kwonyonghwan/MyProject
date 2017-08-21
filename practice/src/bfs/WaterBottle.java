@@ -17,7 +17,7 @@ class Bottle {
 	}
 }
 
-public class WarterBottle {
+public class WaterBottle {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
