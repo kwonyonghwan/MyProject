@@ -1,20 +1,22 @@
 package stringHandling;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class StringExplosion {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 
-		Scanner sc = new Scanner(new FileInputStream("src/stringHandling/StringExplosion.txt"));
+//		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
-		// Scanner sc = new Scanner(System.in);
-
-		StringBuffer inputString = new StringBuffer(" " + sc.nextLine());
-		String explosion = " " + sc.nextLine();
-		String result = "";
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream("src/stringHandling/StringExplosion.txt")));
+		
+		StringBuffer inputString = new StringBuffer(" " + br.readLine());
+		String explosion = " " + br.readLine();
 
 		int[] piArray = new int[explosion.length()];
 		for (int i = 1; i < explosion.length(); i++) {
@@ -27,12 +29,16 @@ public class StringExplosion {
 			piArray[i] = lengthOfSubsequence;
 		} // forMakePiArray
 
-		// kmp알고리즘 돌리면서 서치
-
 		for (int index = 1; index < (inputString.length() - (explosion.length() - 2)); index++) {
-			for (int i = 1; i < explosion.length(); i++) {
+
+			boolean nextMoreFlag = false;
+			int nextMore = 0;
+			for (int i = nextMoreFlag?1:1+nextMore; i < explosion.length(); i++) {
 				if (inputString.charAt(index + i - 1) != explosion.charAt(i)) {
+					nextMoreFlag = false;
 					if(piArray[i-1]>0){
+						nextMoreFlag=true;
+						nextMore = i;
 					index += (i - 2 - piArray[i - 1]);
 					}
 					break;
@@ -49,10 +55,12 @@ public class StringExplosion {
 				}//findExplotion
 
 			}
-		}
-
+		}//forKMPSearch
+		
+		BufferedWriter bw = new BufferedWriter( new OutputStreamWriter( System.out ) );
 		if (inputString.length() > 1) {
-			System.out.println(inputString.delete(0, 1).toString());
+			bw.write(inputString.delete(0, 1).toString());
+			bw.flush();
 		} else {
 			System.out.println("FRULA");
 		}

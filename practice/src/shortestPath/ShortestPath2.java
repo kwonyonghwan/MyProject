@@ -1,4 +1,4 @@
-package shortestPath;
+/*package shortestPath;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -107,3 +107,4 @@ public class ShortestPath2 {
 		}//dijkstra()
 
 	}// class
+*/

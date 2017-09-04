@@ -21,10 +21,13 @@ public class WaterBottle {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-		Scanner sc = new Scanner(new FileInputStream("src/bfs/WarterBottle.txt"));
+		Scanner sc = new Scanner(new FileInputStream("src/bfs/WaterBottle.txt"));
 
 		// Scanner sc = new Scanner(System.in);
+	//	int[] bottleSizeList = { sc.nextInt(), sc.nextInt(), sc.nextInt() };
 		int[] bottleSizeList = { sc.nextInt(), sc.nextInt(), sc.nextInt() };
+		
+		
 		boolean[][][] visitiedMap = new boolean[201][201][201];
 
 		Queue<Bottle> bottleQueue = new LinkedList<>();
@@ -40,8 +43,7 @@ public class WaterBottle {
 			if (nowBottle.bottleSize[0] == 0) {
 				resultList.add(nowBottle.bottleSize[2]);
 			}
-			// 가능한 애들 들가기 +1 +2
-
+			
 			for (int i = 0; i < 3; i++) {
 				for (int j = 1; j < 3; j++) {
 
