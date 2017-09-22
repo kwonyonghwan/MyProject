@@ -30,6 +30,7 @@ public class StringExplosion3 {
 						break;
 					}
 				}
+				
 
 				if(isExplosion){
 				for(int j=0; j<explosion.length(); j++){
