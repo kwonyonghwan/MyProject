@@ -1,4 +1,4 @@
-package bfs;
+/*package bfs;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -141,3 +141,4 @@ public class BrokenWallMove2 {
 
 	}// main
 }// class
+*/
