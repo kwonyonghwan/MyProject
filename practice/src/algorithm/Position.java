@@ -11,11 +11,11 @@ public class Position {
 
 }
 /*
- * class Position { int positionI; int positionJ;
- * 
- * public Position(int i, int j) { this.positionI = i; this.positionJ = j; }
- * 
- * }
+  class Position { int positionI; int positionJ;
+  
+  public Position(int i, int j) { this.positionI = i; this.positionJ = j; }
+  
+  }
  */
 
 /*

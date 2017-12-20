@@ -1,4 +1,4 @@
-/*package bfs;
+package bfs;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +16,6 @@ public class HorseMonkey {
 		Scanner sc = new Scanner(new FileInputStream("src/bfs/HorseMonkey.txt"));
 
 		// Scanner sc = new Scanner(System.in);
-
 		int countOfHorse = sc.nextInt();
 		int numberOfW = sc.nextInt();
 		int numberOfH = sc.nextInt();
@@ -49,6 +48,7 @@ public class HorseMonkey {
 				Position nowPosition = queue.poll();
 
 				for (int j = 0; j < 4; j++) {
+
 					if (nowPosition.positionI + monkeyMovingList[j][0] > -1
 							&& nowPosition.positionI + monkeyMovingList[j][0] < graph.length
 							&& nowPosition.positionJ + monkeyMovingList[j][1] > -1
@@ -98,9 +98,9 @@ public class HorseMonkey {
 
 					} // forHorseMoving
 
-				} // ifHorseCount
+				}//ifHorseCount
 
-			} // forQueueSize
+			}//forQueueSize
 		} // whileBFS
 
 		System.out.println(-1);
@@ -119,10 +119,4 @@ class Position {
 		this.countOfHorse = k;
 	}
 
-	public Position(int i, int j) {
-		this.positionI = i;
-		this.positionJ = j;
-		// TODO Auto-generated constructor stub
-	}
-
-}*/
+}

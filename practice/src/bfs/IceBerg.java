@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import javax.swing.text.Position.Bias;
 
+import algorithm.PrintGraph;
+
 public class IceBerg {
 	static int[][] directionList = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 
@@ -38,6 +40,7 @@ public class IceBerg {
 					for (int k = 0; k < 4; k++) {
 						if(graph[i][j]>0){
 							noIsland = false;
+							
 							if (i + directionList[k][0] > -1 && i + directionList[k][0] < graph.length
 									&& j + directionList[k][1] > -1 && j + directionList[k][1] < graph[0].length
 									&& graph[i + directionList[k][0]][j + directionList[k][1]] == 0) {

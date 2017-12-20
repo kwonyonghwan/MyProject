@@ -1,0 +1,20 @@
+26
+18 
+A B
+D E
+F E
+A F
+E G
+D F
+G P
+O P
+E R
+U I
+L M
+J N
+A Q
+E G
+Z F
+U T
+E W
+Q W
